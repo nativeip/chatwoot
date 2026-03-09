@@ -13,7 +13,7 @@ import {
   CHATWOOT_SET_USER,
 } from '../../constants/appEvents';
 
-Cookies.defaults = { sameSite: 'Lax' };
+Cookies.defaults = { sameSite: 'None', secure: true };
 
 export const getLoadingStatus = state => state.fetchAPIloadingStatus;
 export const setLoadingStatus = (state, status) => {
@@ -32,6 +32,8 @@ export const setAuthCredentials = response => {
   const expiryDate = getHeaderExpiry(response);
   Cookies.set('cw_d_session_info', JSON.stringify(response.headers), {
     expires: differenceInDays(expiryDate, new Date()),
+    sameSite: 'None',
+    secure: true,
   });
   setUser(response.data.data, expiryDate);
 };
